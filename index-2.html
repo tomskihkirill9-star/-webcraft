@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebCraft — Продажа сайтов под ключ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+  body { background:#0a0a12; color:#fff; overflow-x:hidden; }
+
+  /* Фон с градиентными пятнами */
+  .bg-glow {
+    position:fixed; inset:0; z-index:-1;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(120,80,255,.25), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(0,200,255,.18), transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(255,0,150,.15), transparent 45%),
+      #0a0a12;
+  }
+
+  /* Навигация */
+  nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 8%; position:sticky; top:0; z-index:100;
+    backdrop-filter:blur(12px); background:rgba(10,10,18,.6);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .logo { font-size:24px; font-weight:900; letter-spacing:-1px; }
+  .logo span { background:linear-gradient(90deg,#8b5cf6,#06b6d4); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  nav a { color:#cbd5e1; text-decoration:none; margin-left:28px; font-weight:600; font-size:14px; transition:.3s; }
+  nav a:hover { color:#fff; }
+
+  /* Hero */
+  .hero {
+    text-align:center; padding:110px 8% 90px; position:relative;
+  }
+  .badge {
+    display:inline-block; padding:8px 18px; border-radius:100px; font-size:13px; font-weight:600;
+    background:rgba(139,92,246,.15); border:1px solid rgba(139,92,246,.4); color:#c4b5fd;
+    margin-bottom:28px; animation:fadeUp .8s ease;
+  }
+  .hero h1 {
+    font-size:clamp(38px,7vw,78px); font-weight:900; line-height:1.05; letter-spacing:-2px;
+    animation:fadeUp .8s ease .1s both;
+  }
+  .hero h1 .grad {
+    background:linear-gradient(90deg,#8b5cf6,#06b6d4,#ec4899);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:200% auto; animation:shift 4s linear infinite;
+  }
+  .hero p { max-width:620px; margin:26px auto 0; color:#94a3b8; font-size:18px; line-height:1.6; animation:fadeUp .8s ease .2s both; }
+  .hero-btns { margin-top:42px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; animation:fadeUp .8s ease .3s both; }
+  .btn {
+    padding:16px 34px; border-radius:14px; font-weight:700; font-size:15px; text-decoration:none;
+    transition:.3s; cursor:pointer; border:none; display:inline-block;
+  }
+  .btn-primary {
+    background:linear-gradient(90deg,#8b5cf6,#06b6d4); color:#fff;
+    box-shadow:0 10px 40px rgba(139,92,246,.4);
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 50px rgba(139,92,246,.6); }
+  .btn-ghost {
+    background:rgba(255,255,255,.05); color:#fff; border:1px solid rgba(255,255,255,.15);
+  }
+  .btn-ghost:hover { background:rgba(255,255,255,.1); transform:translateY(-3px); }
+
+  /* Секции */
+  section { padding:90px 8%; }
+  .sec-title { text-align:center; margin-bottom:64px; }
+  .sec-title h2 { font-size:clamp(30px,4.5vw,48px); font-weight:900; letter-spacing:-1.5px; }
+  .sec-title h2 span { background:linear-gradient(90deg,#8b5cf6,#06b6d4); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sec-title p { color:#94a3b8; margin-top:14px; font-size:17px; }
+
+  /* Виды сайтов */
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+  .card {
+    background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08); border-radius:22px; padding:34px 30px;
+    transition:.4s; position:relative; overflow:hidden;
+  }
+  .card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg,transparent,#8b5cf6,transparent); opacity:0; transition:.4s;
+  }
+  .card:hover { transform:translateY(-8px); border-color:rgba(139,92,246,.5); box-shadow:0 20px 60px rgba(0,0,0,.5); }
+  .card:hover::before { opacity:1; }
+  .card .ico { font-size:40px; margin-bottom:18px; display:block; }
+  .card h3 { font-size:21px; font-weight:800; margin-bottom:12px; }
+  .card p { color:#94a3b8; font-size:15px; line-height:1.6; margin-bottom:16px; }
+  .card .from { font-size:13px; color:#c4b5fd; font-weight:700; }
+
+  /* Прайс */
+  .price-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:26px; align-items:stretch; }
+  .plan {
+    background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.1); border-radius:26px; padding:40px 32px;
+    display:flex; flex-direction:column; transition:.4s; position:relative;
+  }
+  .plan:hover { transform:translateY(-6px); border-color:rgba(139,92,246,.5); }
+  .plan.popular {
+    border:2px solid transparent;
+    background:
+      linear-gradient(#14141f,#14141f) padding-box,
+      linear-gradient(135deg,#8b5cf6,#06b6d4) border-box;
+    box-shadow:0 20px 60px rgba(139,92,246,.25);
+  }
+  .plan .tag {
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(90deg,#8b5cf6,#06b6d4); padding:7px 20px; border-radius:100px;
+    font-size:12px; font-weight:800; letter-spacing:.5px;
+  }
+  .plan h3 { font-size:22px; font-weight:800; margin-bottom:8px; }
+  .plan .desc { color:#94a3b8; font-size:14px; margin-bottom:26px; }
+  .plan .price { font-size:44px; font-weight:900; letter-spacing:-2px; margin-bottom:4px; }
+  .plan .price small { font-size:16px; font-weight:600; color:#94a3b8; }
+  .plan .old { color:#64748b; text-decoration:line-through; font-size:15px; margin-bottom:24px; }
+  .plan ul { list-style:none; margin-bottom:34px; flex-grow:1; }
+  .plan li { padding:11px 0; color:#cbd5e1; font-size:15px; display:flex; gap:12px; align-items:flex-start; }
+  .plan li::before { content:'✓'; color:#06b6d4; font-weight:900; flex-shrink:0; }
+  .plan .btn { width:100%; text-align:center; padding:15px; }
+
+  /* CTA / контакт */
+  .cta {
+    text-align:center; margin:60px 8% 90px; padding:80px 40px; border-radius:32px;
+    background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(6,182,212,.12));
+    border:1px solid rgba(139,92,246,.3); position:relative; overflow:hidden;
+  }
+  .cta h2 { font-size:clamp(28px,4.5vw,44px); font-weight:900; letter-spacing:-1.5px; margin-bottom:16px; }
+  .cta p { color:#cbd5e1; font-size:17px; max-width:520px; margin:0 auto 36px; }
+  .tg-btn {
+    display:inline-flex; align-items:center; gap:12px; padding:18px 40px; border-radius:16px;
+    background:linear-gradient(90deg,#8b5cf6,#06b6d4); color:#fff; font-weight:800; font-size:17px;
+    text-decoration:none; box-shadow:0 12px 45px rgba(139,92,246,.45); transition:.3s;
+  }
+  .tg-btn:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 18px 60px rgba(139,92,246,.65); }
+
+  footer { text-align:center; padding:36px 8%; color:#64748b; font-size:14px; border-top:1px solid rgba(255,255,255,.06); }
+  footer a { color:#a78bfa; text-decoration:none; }
+
+  @keyframes fadeUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes shift { to { background-position:200% center; } }
+
+  @media(max-width:600px){
+    nav a { display:none; }
+    section { padding:60px 6%; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav>
+  <div class="logo">Web<span>Craft</span></div>
+  <div>
+    <a href="#types">Виды сайтов</a>
+    <a href="#price">Прайс</a>
+    <a href="#contact">Контакты</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="badge">🚀 Создание сайтов под ключ за 3–7 дней</div>
+  <h1>Твой сайт, который <br><span class="grad">приносит деньги</span></h1>
+  <p>Разработка лендингов, магазинов и корпоративных сайтов с современным дизайном, адаптивом под мобильные и быстрой загрузкой. Без шаблонов и воды.</p>
+  <div class="hero-btns">
+    <a href="#price" class="btn btn-primary">Смотреть прайс</a>
+    <a href="#contact" class="btn btn-ghost">Связаться в Telegram</a>
+  </div>
+</header>
+
+<!-- ВИДЫ САЙТОВ -->
+<section id="types">
+  <div class="sec-title">
+    <h2>Виды <span>сайтов</span></h2>
+    <p>Выбери формат под свою задачу</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <span class="ico">🎯</span>
+      <h3>Лендинг (Landing Page)</h3>
+      <p>Одностраничный сайт для продажи товара, услуги или курса. Идеален для рекламы и быстрых запусков.</p>
+      <div class="from">от 8 000 ₽</div>
+    </div>
+    <div class="card">
+      <span class="ico">🏢</span>
+      <h3>Корпоративный сайт</h3>
+      <p>Многостраничный сайт компании: услуги, о нас, портфолио, контакты. Формирует доверие клиентов.</p>
+      <div class="from">от 20 000 ₽</div>
+    </div>
+    <div class="card">
+      <span class="ico">🛒</span>
+      <h3>Интернет-магазин</h3>
+      <p>Полноценный магазин с каталогом, корзиной, оплатой и админкой. Под ключ с настройкой товаров.</p>
+      <div class="from">от 35 000 ₽</div>
+    </div>
+    <div class="card">
+      <span class="ico">💼</span>
+      <h3>Сайт-визитка</h3>
+      <p>Компактная презентация тебя или бизнеса. Быстро, стильно и недорого — для старта.</p>
+      <div class="from">от 5 000 ₽</div>
+    </div>
+    <div class="card">
+      <span class="ico">📚</span>
+      <h3>Блог / Медиа</h3>
+      <p>Сайт со статьями, админкой для публикаций, SEO-оптимизацией и системой комментариев.</p>
+      <div class="from">от 15 000 ₽</div>
+    </div>
+    <div class="card">
+      <span class="ico">⚙️</span>
+      <h3>Веб-приложение</h3>
+      <p>Сложные сервисы: личные кабинеты, CRM, дашборды. Индивидуальная разработка под задачу.</p>
+      <div class="from">от 60 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<!-- ПРАЙС -->
+<section id="price">
+  <div class="sec-title">
+    <h2>Прайс <span>и тарифы</span></h2>
+    <p>Честные цены. Всё включено — без скрытых доплат</p>
+  </div>
+  <div class="price-grid">
+    <div class="plan">
+      <h3>Старт</h3>
+      <div class="desc">Для быстрого запуска</div>
+      <div class="price">5 000 <small>₽</small></div>
+      <div class="old">7 000 ₽</div>
+      <ul>
+        <li>Сайт-визитка (до 3 разделов)</li>
+        <li>Адаптив под телефон</li>
+        <li>Дизайн по шаблону</li>
+        <li>Подключение домена и хостинга</li>
+        <li>Срок: 2–3 дня</li>
+      </ul>
+      <a href="#contact" class="btn btn-ghost">Заказать</a>
+    </div>
+
+    <div class="plan popular">
+      <div class="tag">ХИТ ПРОДАЖ</div>
+      <h3>Бизнес</h3>
+      <div class="desc">Лендинг под продажи</div>
+      <div class="price">8 000 <small>₽</small></div>
+      <div class="old">12 000 ₽</div>
+      <ul>
+        <li>Продающий лендинг (до 8 блоков)</li>
+        <li>Уникальный дизайн</li>
+        <li>Адаптив + анимации</li>
+        <li>Формы заявок и кнопки связи</li>
+        <li>SEO-настройка и метрика</li>
+        <li>Срок: 3–5 дней</li>
+      </ul>
+      <a href="#contact" class="btn btn-primary">Заказать</a>
+    </div>
+
+    <div class="plan">
+      <h3>Про</h3>
+      <div class="desc">Магазин или корпоратив</div>
+      <div class="price">25 000 <small>₽</small></div>
+      <div class="old">35 000 ₽</div>
+      <ul>
+        <li>Многостраничный сайт / магазин</li>
+        <li>Каталог, корзина, оплата</li>
+        <li>Админ-панель</li>
+        <li>Индивидуальный дизайн</li>
+        <li>Поддержка 30 дней</li>
+        <li>Срок: 7–10 дней</li>
+      </ul>
+      <a href="#contact" class="btn btn-ghost">Заказать</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta" id="contact">
+  <h2>Готов запустить свой сайт?</h2>
+  <p>Напиши мне в Telegram — обсудим задачу, предложу решение и назову точную цену. Отвечаю быстро.</p>
+  <a href="https://t.me/XLOARS" target="_blank" class="tg-btn">✈️ Написать в Telegram — @XLOARS</a>
+</div>
+
+<footer>
+  © 2025 WebCraft. Сайты, которые работают. Связь: <a href="https://t.me/XLOARS" target="_blank">@XLOARS</a>
+</footer>
+
+<script>
+  // Плавный скролл
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
